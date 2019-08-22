@@ -10,4 +10,6 @@ print("Num1 3 digits: {0:.3} Num1 3 dp: {0:.3f}".format(num1))
 
 # Way 3. Using F-Strings.
 song = "Bury A Friend"
+num2 = 312.3212343212
 print(f"I choreographed my routine to {song}")
+print(f"My number to 4 dp is: {num2:.4f}")
