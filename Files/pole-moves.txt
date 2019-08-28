@@ -1,6 +1,1 @@
->BEGINNER_MOVES
-Chair Spin, Attitude, Step Around, Pirouette, Basic Sit, Basic Invert
->INTERMEDIATE_MOVES
-Allegra, Layback, Butterfly, Aerial Invert
->ADVANCED_MOVES
-Janeiro, Shoulder Mount, Ayesha, Handspring
+Eros, Brass MonkeySeahorse, Twisty Grip Handspring, Ayesha, Extended ButterflyChair Spin, Fireman Spin, Cradle Spin
