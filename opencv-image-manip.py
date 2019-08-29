@@ -18,7 +18,12 @@ rectangle = cv2.rectangle(line_green, (180, 180), (330, 330), (0, 0, 255), 5)
 # -1 is a filled in circle. center (251, 251) with radius 10
 circle = cv2.circle(rectangle, (254, 254), 20, (235, 52, 186), -1)
 
-plt.imshow(circle)
+# writes "OpenCV" in white at (10, 500) with specified font, line type, thickness = 2, size = 4
+font = cv2.FONT_HERSHEY_COMPLEX
+lineType = cv2.LINE_AA
+text = cv2.putText(circle, 'OpenCV', (10, 500), font, 4, (255, 255, 255), 2, lineType)
+
+plt.imshow(text)
 if plt.waitforbuttonpress(0) & 0xFF == 27:
     plt.close()
 
