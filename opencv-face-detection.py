@@ -10,15 +10,15 @@ def convertToRGB(image):
 
 haar_cascade_face = cv2.CascadeClassifier('Haar-Cascade-Files/haarcascade_frontalface_default.xml')
 
-
 # Loading the image to be tested
 test_image = cv2.imread('Images/baby.png')
-test_image = convertToRGB(test_image)
 
-# Converting to grayscale
-test_image_gray = cv2.cvtColor(test_image, cv2.COLOR_BGR2GRAY)
+faces = haar_cascade_face.detectMultiScale(test_image, scaleFactor=1.2, minNeighbors=5)
+print('Faces found: ', len(faces))
 
-# Displaying the grayscale image
-plt.imshow(test_image, cmap='gray')
+for (x, y, w, h) in faces:
+    cv2.rectangle(test_image, (x, y), (x + w, y + h), (250, 110, 241), 4)
+
+plt.imshow(convertToRGB(test_image))
 if plt.waitforbuttonpress(0) & 0xFF == 27:
     plt.close()
