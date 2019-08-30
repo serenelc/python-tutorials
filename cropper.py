@@ -56,18 +56,18 @@ def calc_overlap_percentage(overlap_list, total_feature_area):
 def draw(crops, features, img):
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     for crop in crops:
+        copy = img.copy()
         crop_details = crop['crop']
         x1 = crop_details['x']
         y1 = crop_details['y']
         x2 = crop_details['width'] + x1
         y2 = crop_details['height'] + y1
-        cropped = cv2.rectangle(img, (x1, y1), (x2, y2), (255, 255, 255), 5)
+        cropped = cv2.rectangle(copy, (x1, y1), (x2, y2), (250, 240, 55), 5)
         for feature in features:
             (xx1, yy1, xx2, yy2) = feature['bbox']
             cropped = cv2.rectangle(cropped, (xx1, yy1), (xx2, yy2), (0, 255, 0), 3)
         plt.imshow(cropped)
-        if plt.waitforbuttonpress(0) & 0xFF == 27:
-            plt.close()
+        plt.show()
 
 
 def crop_image(image_handler, URL = "http://127.0.0.1:5000/api"):
