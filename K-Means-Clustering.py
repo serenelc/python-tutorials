@@ -40,7 +40,8 @@ test.fillna(test.mean(), inplace=True)
 # There are still missing values in the Cabin and Embarked columns because these values are non numeric
 
 # Survival count with respect to the class
-print(train[['Pclass', 'Survived']].groupby(['Pclass'], as_index=False).mean().sort_values(by='Survived', ascending=False))
+print(train[['Pclass', 'Survived']].groupby(['Pclass'], as_index=False).mean().sort_values(by='Survived',
+                                                                                           ascending=False))
 # Survival count with respect to gender
 print(train[["Sex", "Survived"]].groupby(['Sex'], as_index=False).mean().sort_values(by='Survived', ascending=False))
 
@@ -54,3 +55,39 @@ grid.add_legend()
 
 plt.show()
 
+# We can drop these categories because they wouldn't affect the survival rate of the passengers so not relevant
+train = train.drop(['Name', 'Ticket', 'Cabin', 'Embarked'], axis=1)
+test = test.drop(['Name', 'Ticket', 'Cabin', 'Embarked'], axis=1)
+
+# Now only sex remains as a non numeric field so we need to convert it into a numeric field.
+# We will do this using LabelEncoder()
+labelEncoder = LabelEncoder()
+labelEncoder.fit(train['Sex'])
+labelEncoder.fit(test['Sex'])
+train['Sex'] = labelEncoder.transform(train['Sex'])
+test['Sex'] = labelEncoder.transform(test['Sex'])
+
+X = np.array(train.drop(['Survived'], 1).astype(float))
+y = np.array(train['Survived'])
+
+# We scale the data because the features in the data set contain different ranges so we scale
+# the features to have the same range [0, 1]
+scaler = MinMaxScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Want to cluster the passenger records into 2: Survived or Not survived
+kmeans = KMeans(n_clusters=2, max_iter=600, algorithm='auto')
+kmeans.fit(X_scaled)
+KMeans(algorithm='auto', copy_x=True, init='k-means++', max_iter=600,
+       n_clusters=2, n_init=10, n_jobs=1, precompute_distances='auto',
+       random_state=None, tol=0.0001, verbose=0)
+
+correct = 0
+for i in range(len(X)):
+    predict_me = np.array(X[i].astype(float))
+    predict_me = predict_me.reshape(-1, len(predict_me))
+    prediction = kmeans.predict(predict_me)
+    if prediction[0] == y[i]:
+        correct += 1
+
+print(correct / len(X))
